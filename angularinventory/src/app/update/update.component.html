@@ -1,0 +1,40 @@
+<p>update works!</p>
+{{data.ProductName}}
+{{data.ProductCategory}}
+{{data.Price}}
+ <div class="container">
+        <h3 mat-dialog-title>Product Name: {{data.ProductName}}</h3>
+       
+        <form [formGroup]="up" (ngSubmit)="Submit()">
+  
+                <mat-form-field>
+            
+                  <input matInput placeholder="ProductName" type="text" formControlName="ProductName" value={{data.ProductName}} required>
+            
+                  <!-- <mat-error *ngIf="up.get('ProductName').invalid && up.get('ProductName').touched">
+                    Product Name is not right
+                  </mat-error> -->
+                </mat-form-field>
+              
+              <mat-form-field>
+                <input matInput placeholder="ProductCategory" type="text" formControlName="ProductCategory" value={{data.ProductCategory}} required>
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                
+                <input matInput placeholder="Price" type="number" formControlName="Price" min="0" value={{data.Price}} required>
+              </mat-form-field>
+              
+              <br>
+              <mat-form-field>
+                
+                <input matInput placeholder="Units" type="number" formControlName="Units" min="0" value={{data.Units}} required>
+              </mat-form-field>
+                  
+          <div mat-dialog-actions>
+            <span>{{data.ProductName}} {{data.ProductCategory}}</span>
+            <button mat-button [type]="submit"  [mat-dialog-close]="1" (click)="stopEdit(data)">Save</button>
+            <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+          </div>
+        </form>
+      </div>

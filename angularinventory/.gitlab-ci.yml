@@ -1,0 +1,77 @@
+image: circleci/node:11-browsers
+stages:
+  - stage::build
+  - tests
+  - lint
+variables:
+  KARMA: "
+  let defaultConfFile = './karma.conf';
+  const karmaConfig = require(defaultConfFile);
+  module.exports = function(overridedConfig) {
+    reporters = ['progress', 'junit'];
+    browsers = ['ChromeHeadless'];
+    customLaunchers = {
+      ChromeHeadless: {
+        base: 'Chrome',
+        flags: [
+          '--headless',
+          '--disable-gpu',
+          '--remote-debugging-port=9222',
+          '--no-sandbox'
+        ],
+      }
+    };
+    junitReporter = {
+      outputDir:  'reports/karma/',
+      outputFile: 'karma-test-result.xml',
+      suite: '',
+      useBrowserName: false,
+    };
+    let mycfg = {
+      set(val) {
+        val.plugins = [
+          require('karma-jasmine'),
+          require('karma-chrome-launcher'),
+          require('karma-jasmine-html-reporter'),
+          require('karma-coverage-istanbul-reporter'),
+          require('@angular-devkit/build-angular/plugins/karma'),
+          require('karma-junit-reporter')
+        ];
+        val.reporters = reporters;
+        val.junitReporter = junitReporter;
+        val.browsers = browsers;
+        val.customLaunchers = customLaunchers;
+        val.singleRun = true;
+        val.browserDisconnectTolerance = 1;
+        val.browserNoActivityTimeout = 50000;
+        overridedConfig.set(val);
+      }
+    };
+    karmaConfig(mycfg);
+  }
+  "
+build_app:
+  stage: stage::build
+  tags:
+    - immersive
+  script:
+    - npm install
+karma_unit_tests:
+  stage: tests
+  when: always
+  before_script:
+    - echo $KARMA > ./karma.config.js
+  tags:
+    - immersive
+  script:
+    - npm install
+    - npm install --save karma-junit-reporter jasmine-reporters
+    - npm run test -- --watch=false --karma-config=karma.conf.js
+tslint_app:
+  stage: lint
+  when: always
+  tags:
+    - immersive
+  script:
+    - npm install
+    - npm run lint -- --format json

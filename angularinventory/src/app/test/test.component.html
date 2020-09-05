@@ -1,0 +1,52 @@
+<form [formGroup]="reg" (ngSubmit)="onSubmit()">
+  
+    <mat-form-field>
+
+      <input matInput placeholder="ProductName" type="text" formControlName="ProductName" required>
+
+      <mat-error *ngIf="reg.get('ProductName').invalid && reg.get('ProductName').touched">
+        Product Name is not right
+      </mat-error>
+    </mat-form-field>
+  
+  <mat-form-field>
+    <input matInput placeholder="ProductCategory" type="text" formControlName="ProductCategory" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    
+    <input matInput placeholder="Price" type="number" formControlName="Price" min="0" required>
+  </mat-form-field>
+  <!-- <select name="country">
+      <option value="India">India</option>
+      <option value="UK">UK</option>
+      <option value="USA">USA</option>
+      
+</select> -->
+
+  <mat-form-field>
+    
+    <input matInput placeholder="Units" type="number" formControlName="Units" min="0" required>
+  </mat-form-field>
+  <h3>Location</h3>
+
+  <label>
+    Area:
+    <input type="text" formControlName="Area">
+  </label>
+
+  <label>
+    Zone:
+    <input type="text" formControlName="Zone">
+  </label>
+
+  <label>
+    Shelf:
+    <input type="text" formControlName="Shelf">
+  </label>
+  <br>
+  <button type="submit" [disabled]="!reg.valid">Submit</button>
+  <p>Form Status: {{reg.status}}</p>
+
+</form>
+<h3 *ngIf="msg">{{message}}</h3>

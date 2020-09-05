@@ -1,0 +1,33 @@
+div{
+    background-color: aquamarine;
+}
+ul {
+    list-style-type: none;
+    margin: 0px;
+    padding-left: 40px;
+    overflow: hidden;
+    background-color: black;
+    padding-right: 30px;
+}
+
+li {
+    float: left;
+    margin: 0px;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    background-color:red;
+}
+
+li a:hover:not(.active) {
+    background-color: darkblue;
+}
+
+.active {
+    background-color: blue;
+}

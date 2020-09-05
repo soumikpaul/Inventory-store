@@ -1,0 +1,82 @@
+<p>The entire list will be displayed upon clicking display list button!</p>
+
+{{errorMsg}}
+<mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+<!-- <form>
+<mat-form-field class="srch1">
+<input matInput placeholder="Search ProductName" [formControl]="srch" (change)="onAmountChange()">
+</mat-form-field>
+<button (click)="search()">Search</button>
+</form> -->
+
+
+<!-- <ul *ngFor ="let a of form">
+        <li>{{a["ProductName"]}}{{"  "}}{{a["ProductCategory"]}}{{"  "}}{{a["Price"]}}</li>
+</ul> -->
+<!-- <table matSort (matSortChange)="sortData($event)">
+        <thead>
+                <th >Product Name</th>
+                <th >Category</th>
+                <th >Price</th>
+                <th >Units</th>
+                <th >Location</th>
+        </thead>
+        <tbody *ngFor="let item of form">
+                <tr>
+                <td>{{item["ProductName"]}}</td>
+                <td>{{item["ProductCategory"]}}</td>
+                <td>{{item["Price"]}}</td>
+                <td>{{item["Units"]}}</td>
+                <td>{{item["Area"]}}{{item["Zone"]}}{{item["Shelf"]}}</td>
+        </tr>
+        </tbody>
+</table> -->
+<!-- {{form}} -->
+<button mat-raised-button color="primary" (click)="list()">
+                Display List
+</button>
+<mat-table [dataSource]="dataSource" matSort class="table">
+        <ng-container matColumnDef="ProductName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="th">ProductName</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.ProductName}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="ProductCategory">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="th">ProductCategory</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.ProductCategory}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Price">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="th">Price</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.Price}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Units">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="th">Units</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.Units}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Location">
+                <mat-header-cell *matHeaderCellDef class="th">Location</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.Area}}{{ element.Zone}}{{ element.Shelf}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef>
+                          <button mat-icon-button color="primary" (click)="addNew()">
+                            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                          </button>
+                        </mat-header-cell>
+                  
+                        <mat-cell *matCellDef="let element; let i=index;">
+                          <button mat-icon-button color="accent" (click)="startEdit(element.id, element.ProductName, element.ProductCategory, element.Price, element.Units, element.Location)">
+                            <mat-icon aria-label="Edit">edit</mat-icon>
+                          </button>
+                  
+                          <button mat-icon-button color="accent" (click)="deleteItem(element.id, element.ProductName, element.ProductCategory, element.Price, element.Units, element.Location)">
+                            <mat-icon aria-label="Delete">delete</mat-icon>
+                          </button>
+                        </mat-cell>
+                      </ng-container>
+        
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" class="tr"></mat-row>
+</mat-table>
+<mat-paginator [pageSizeOptions]="[ 5,3,10,20]" showFirstLastButtons></mat-paginator>
